@@ -15,6 +15,8 @@ class Map {
   load(mapData) {
     this.mapData = mapData
     this.populateObjects()
+    this.game.player = this.getObjectsArray()
+      .find((o) => o.constructor.name === 'Player')
   }
 
   paintObject(paint, layer, position) {
@@ -34,13 +36,21 @@ class Map {
     this.cachedObjectsArray = null
   }
 
-  removeObject(object) {
-    for (const layer of Object.keys(this.objects)) {
-      const index = this.objects[layer].indexOf(object)
+  removeObject(object, currentLayer) {
+    {
+      const index = this.objects[currentLayer].indexOf(object)
       if (index > -1) {
-        this.objects[layer].splice(index, 1)
+        this.objects[currentLayer].splice(index, 1)
         this.cachedObjectsArray = null
-        break
+      }
+    }
+    {
+      const index = this.mapData[currentLayer]
+        .findIndex((value) => value.type === object.constructor.name
+          && value.x === object.position.x && value.y === object.position.y
+        )
+      if (index > -1) {
+        this.mapData[currentLayer].splice(index, 1)
       }
     }
   }

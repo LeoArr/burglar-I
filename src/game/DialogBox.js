@@ -9,7 +9,7 @@ const STATES = {
   IDLE: 'IDLE'
 }
 
-const WIDTH = 12
+const WIDTH = 50
 
 class DialogBox {
   constructor(game, text) {
@@ -20,15 +20,10 @@ class DialogBox {
     this.textIndex = 0
 
     this.font = this.game.renderer.fonts['alagard']
-    this.scaleValue = this.game.renderer.camera.scaleValue
-    this.width = C.TILE_WIDTH * WIDTH * this.scaleValue
-    this.rowHeight = C.TILE_WIDTH * this.scaleValue
-    this.edge = 5 * this.scaleValue
-    this.height = this.rowHeight * 2 + this.edge
-    this.xPos = (windowWidth - (this.width + this.edge * 2)) / 2
+    this.calcParams()
     
     this.position = createVector(0, windowHeight)
-    this.targetPos = createVector(0, windowHeight - this.height - this.edge * 2)
+    this.targetPos = createVector(0, windowHeight - this.height)
     this.maxPositionStep = 10
     this.positionStep = 0
     this.state = STATES.START_OPEN
@@ -41,21 +36,26 @@ class DialogBox {
     this.draw()
   }
 
+  calcParams() {
+    // 4:1
+    this.width = Math.min(windowWidth, C.TILE_WIDTH * WIDTH)
+    this.height = Math.floor(this.width / 4)
+    this.edge = 5
+    this.rowHeight = this.height * 0.4 - this.edge
+    this.xPos = (windowWidth - this.width) / 2
+    this.targetPos = createVector(0, windowHeight - this.height)
+    this.position = this.targetPos.copy()
+  }
+
   resize() {
-    this.scaleValue = this.game.renderer.camera.scaleValue
-    this.width = C.TILE_WIDTH * WIDTH * this.scaleValue
-    this.rowHeight = C.TILE_WIDTH * this.scaleValue
-    this.edge = 5 * this.scaleValue
-    this.height = this.rowHeight * 2 + this.edge
-    this.xPos = (windowWidth - (this.width + this.edge * 2)) / 2
-    this.position = createVector(0, windowHeight - this.height - this.edge * 2)
+    this.calcParams()
   }
 
   update() {
     if (this.state === STATES.START_OPEN) {
       this.positionStep = 0
       this.position = createVector(0, windowHeight)
-      this.targetPos = createVector(0, windowHeight - this.height - this.edge * 2)
+      this.targetPos = createVector(0, windowHeight - this.height)
       this.state = STATES.MOVING
     } else if (this.state === STATES.MOVING) {
       this.position.lerp(this.targetPos, ++this.positionStep / this.maxPositionStep)
@@ -97,9 +97,8 @@ class DialogBox {
     rect(
       this.xPos,
       this.position.y,
-      this.width + this.edge * 2,
-      windowHeight - this.position.y
-      // windowHeight - (this.height + this.edge * 2)
+      this.width,
+      this.height
     )
     textFont(this.font)
     fill(color(126, 59, 50))
@@ -108,8 +107,8 @@ class DialogBox {
       this.displayText,
       this.xPos + this.edge,
       this.position.y + this.edge,
-      this.width,
-      this.height
+      this.width - this.edge,
+      this.height - this.edge
     )
     if (this.state === STATES.IDLE) {
       fill(color(255, 255, 255))

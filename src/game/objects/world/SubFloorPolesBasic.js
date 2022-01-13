@@ -1,19 +1,18 @@
 const GameObject = require("../../GameObject");
 const Sprite = require("../../Sprite");
 
-class DoorBasicBarred extends GameObject {
-  constructor(game, position, interactions) {
+class SubFloorPolesBasic extends GameObject {
+  constructor(game, position) {
     super({
       game,
       position,
-      interactions,
       sprite: new Sprite({
         tileset: 'dungeonTiles',
-        x: 9, y: 12
+        x: 0, y: 5
       })
     })
     this.blocks = true
   }
 }
 
-module.exports = DoorBasicBarred
+module.exports = SubFloorPolesBasic

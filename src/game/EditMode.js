@@ -158,7 +158,7 @@ class EditMode {
       const objectToRemove = this.game.map.getObjectsArray()
         .reverse()
         .find((object) => this.cursor.position.equals(object.position))
-      this.game.map.removeObject(objectToRemove)
+      this.game.map.removeObject(objectToRemove, this.currentLayer)
     }
   }
 
