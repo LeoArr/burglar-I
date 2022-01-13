@@ -1,11 +1,13 @@
+const { ipcRenderer } = require('electron')
 const C = require('./constants')
+const fs = require('fs')
 const EditCursor = require("./objects/EditCursor")
-const PAINTS = require('./paints')
 
 const STATES = {
   PAINTING: 'PAINTING',
   ENTERING_LAYER: 'ENTERING_LAYER',
-  CHOOSING_PAINT: 'CHOOSING_PAINT'
+  CHOOSING_PAINT: 'CHOOSING_PAINT',
+  ERASING: 'ERASING'
 }
 
 const ROW_HEIGHT = 15
@@ -19,7 +21,8 @@ class EditMode {
     this.currentPaint = null
     this.state = STATES.PAINTING
     this.currentLayer = 0
-    this.paints = PAINTS.map((paint) => new (require(`./paints/${paint}`))())
+    this.paints = fs.readdirSync('./src/game/objects/world')
+      .map((paint) => new (require(`./objects/world/${paint}`))())
   }
 
   tick(dt) {
@@ -48,7 +51,7 @@ class EditMode {
       } else {
         fill(color(255, 255, 0))
       }
-      text(paint.title, pos.x, pos.y + this.UNIT * 1.3)
+      text(paint.constructor.name, pos.x, pos.y + this.UNIT * 1.3)
     })
   }
 
@@ -93,6 +96,19 @@ class EditMode {
         this.state = STATES.PAINTING
       }
     }
+    if (key === 'v') {
+      ipcRenderer.send('save-map', this.game.map.mapData)
+    }
+    if (key === 'o') {
+      ipcRenderer.send('load-map')
+    }
+    if (key === 'e') {
+      if (this.state === STATES.PAINTING) {
+        this.state = STATES.ERASING
+      } else if (this.state === STATES.ERASING) {
+        this.state = STATES.PAINTING
+      }
+    }
     if (this.state === STATES.ENTERING_LAYER) {
       if (/\d+/.test(key)) {
         this.currentLayer += key
@@ -108,28 +124,23 @@ class EditMode {
   drawStatusText() {
     textSize(12)
     noStroke()
-    fill(color(255, 255, 0))
-    text(`(P)aint: ${this.currentPaint ? this.currentPaint.title : 'None'} (C)lear`, 5, windowHeight - ROW_HEIGHT)
-
-    if (this.state === STATES.PAINTING || this.state === STATES.ENTERING_LAYER) {
-      if (this.state === STATES.PAINTING) {
-        fill(color(255, 255, 0))
-      } else {
-        fill(color(0, 255, 0))
-      }
-      text(`(L)ayer: ${this.currentLayer}`, 5, windowHeight - ROW_HEIGHT * 2)
+    if (this.state === STATES.PAINTING) {
+      fill(color(255, 255, 0))
+    } else {
+      fill(color(0, 255, 0))
     }
+    text(`(P)aint: ${this.currentPaint ? this.currentPaint.constructor.name : 'None'} | (C)lear paint | (E)raser | (L)ayer: ${this.currentLayer} | Sa(V)e | l(O)ad`, 5, windowHeight - ROW_HEIGHT)
   }
 
   handleCamera() {
     if (!this.isChoosingPaint && keyIsPressed) {
-      if (keyCode === LEFT_ARROW || key === 'a') {
+      if (C.left()) {
         this.game.renderer.camera.position.add(createVector(-1, 0))
-      } else if (keyCode === RIGHT_ARROW || key === 'd') {
+      } else if (C.right()) {
         this.game.renderer.camera.position.add(createVector(1, 0))
-      } else if (keyCode === DOWN_ARROW || key === 's') {
+      } else if (C.down()) {
         this.game.renderer.camera.position.add(createVector(0, 1))
-      } else if (keyCode === UP_ARROW || key === 'w') {
+      } else if (C.up()) {
         this.game.renderer.camera.position.add(createVector(0, -1))
       }
     }
@@ -140,9 +151,14 @@ class EditMode {
       this.game.map.paintObject(this.currentPaint, this.currentLayer, this.cursor.position)
     } else if (this.state === STATES.CHOOSING_PAINT) {
       const index = this.getPaintUnderMouse()
-      if (index >= 0 && index < this.paints.length) {
+      if (index > -1 && index < this.paints.length) {
         this.currentPaint = this.paints[index]
       }
+    } else if (this.state === STATES.ERASING) {
+      const objectToRemove = this.game.map.getObjectsArray()
+        .reverse()
+        .find((object) => this.cursor.position.equals(object.position))
+      this.game.map.removeObject(objectToRemove)
     }
   }
 
@@ -150,7 +166,11 @@ class EditMode {
     if (this.state !== STATES.CHOOSING_PAINT) {
       this.cursor.update()
       this.drawPaint()
+      if (this.state === STATES.ERASING) {
+        tint(color(255, 0, 0))
+      }
       this.cursor.draw()
+      noTint()
     }
 
     fill(color(255, 0, 0, 90))
@@ -162,7 +182,7 @@ class EditMode {
     if (!this.currentPaint) return
     tint(255, 255, 255, 100)
     this.currentPaint.sprite.draw(this.game.renderer, this.cursor.position)
-    tint(255, 255, 255, 255)
+    noTint()
   }
 
   drawBorder() {

@@ -11,12 +11,23 @@ class Renderer {
         url: 'game/assets/tilesets/dungeon_tiles.png'
       }
     }
+    this.fonts = {}
     this.camera = new Camera(game, game.player.getPosition())
   }
 
   loadAssets() {
+    const fontsToLoad = ['alagard.ttf']
     const assetsToLoad = Object.keys(this.tilesets).length
+      + fontsToLoad.length
     var loaded = 0
+
+    fontsToLoad.forEach((font) => {
+      this.fonts[font.split('.')[0]] = loadFont('game/assets/fonts/' + font, () => {
+        this.loadedPercent = ++loaded / assetsToLoad
+        console.log(`Loaded ${(this.loadedPercent * 100).toFixed(1)}% of assets.`)
+      })
+    })
+
     Object.keys(this.tilesets).forEach((tileset) => {
       loadImage(this.tilesets[tileset].url, (img) => {
         this.tilesets[tileset].image = img
@@ -24,7 +35,7 @@ class Renderer {
         if (loaded === assetsToLoad) {
           this.doneLoading = true
         }
-        console.log(`Loaded ${(this.loadedPercent * 100).toFixed(1)}% of image assets.`)
+        console.log(`Loaded ${(this.loadedPercent * 100).toFixed(1)}% of assets.`)
       }, (err) => {
         console.error(err)
       })

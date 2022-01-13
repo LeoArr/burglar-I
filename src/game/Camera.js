@@ -4,7 +4,7 @@ class Camera {
   constructor(game, position) {
     this.game = game
     this.position = position
-    this.scaleValue = 3
+    this.scaleValue = 6
     this.playerOffset = createVector(-8 * this.scaleValue, -10 * this.scaleValue)
   }
 

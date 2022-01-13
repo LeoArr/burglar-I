@@ -1,12 +1,12 @@
 const GameObject = require("../../GameObject");
-const wallBasicSprite = require("../../sprites/wallBasicSprite");
+const Sprite = require("../../Sprite");
 
 class WallBasic extends GameObject {
   constructor(game, position) {
     super({
       game,
       position,
-      sprite: wallBasicSprite()
+      sprite: new Sprite({ tileset: 'dungeonTiles', x: 0, y: 10 })
     })
     this.blocks = true
   }

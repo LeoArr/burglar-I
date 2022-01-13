@@ -1,0 +1,207 @@
+{
+	"0": [
+		{
+			"type": "FloorBasic",
+			"x": 0,
+			"y": 0
+		},
+		{
+			"type": "WallBasic",
+			"x": -1,
+			"y": 0
+		},
+		{
+			"type": "DoorBasicClosed",
+			"x": 0,
+			"y": 1,
+			"interactions": [
+				{
+					"type": "text",
+					"text": "The burglar throws a final glance back ¤ Knowing that he must press on ahead. ¤ If by dawn his quest remains incomplete ¤ He is as good as dead."
+				}
+			]
+		},
+		{
+			"type": "WallBasic",
+			"x": -1,
+			"y": 1
+		},
+		{
+			"type": "WallBasic",
+			"x": 1,
+			"y": 1
+		},
+		{
+			"type": "WallBasic",
+			"x": 1,
+			"y": 0
+		},
+		{
+			"type": "WallBasic",
+			"x": 1,
+			"y": -1
+		},
+		{
+			"type": "WallBasic",
+			"x": -1,
+			"y": -1
+		},
+		{
+			"type": "WallBasic",
+			"x": -1,
+			"y": -2
+		},
+		{
+			"type": "WallBasic",
+			"x": 1,
+			"y": -2
+		},
+		{
+			"type": "WallBasic",
+			"x": -2,
+			"y": -2
+		},
+		{
+			"type": "WallBasic",
+			"x": -3,
+			"y": -2
+		},
+		{
+			"type": "WallBasic",
+			"x": 2,
+			"y": -2
+		},
+		{
+			"type": "WallBasic",
+			"x": 3,
+			"y": -2
+		},
+		{
+			"type": "FloorBasic",
+			"x": 0,
+			"y": -1
+		},
+		{
+			"type": "FloorBasic",
+			"x": 0,
+			"y": -2
+		},
+		{
+			"type": "FloorBasic",
+			"x": 0,
+			"y": -3
+		},
+		{
+			"type": "FloorBasic",
+			"x": -1,
+			"y": -3
+		},
+		{
+			"type": "FloorBasic",
+			"x": -2,
+			"y": -3
+		},
+		{
+			"type": "FloorBasic",
+			"x": -3,
+			"y": -3
+		},
+		{
+			"type": "FloorBasic",
+			"x": 1,
+			"y": -3
+		},
+		{
+			"type": "FloorBasic",
+			"x": 2,
+			"y": -3
+		},
+		{
+			"type": "FloorBasic",
+			"x": 3,
+			"y": -3
+		},
+		{
+			"type": "FloorBasic",
+			"x": 3,
+			"y": -4
+		},
+		{
+			"type": "FloorBasic",
+			"x": 2,
+			"y": -4
+		},
+		{
+			"type": "FloorBasic",
+			"x": 1,
+			"y": -4
+		},
+		{
+			"type": "FloorBasic",
+			"x": 0,
+			"y": -4
+		},
+		{
+			"type": "FloorBasic",
+			"x": -1,
+			"y": -4
+		},
+		{
+			"type": "FloorBasic",
+			"x": -2,
+			"y": -4
+		},
+		{
+			"type": "FloorBasic",
+			"x": -3,
+			"y": -4
+		},
+		{
+			"type": "DoorBasicClosed",
+			"x": 0,
+			"y": -5
+		},
+		{
+			"type": "DoorBasicBarred",
+			"x": 0,
+			"y": -5
+		},
+		{
+			"type": "WallBasic",
+			"x": -3,
+			"y": -5
+		},
+		{
+			"type": "WallBasic",
+			"x": -2,
+			"y": -5
+		},
+		{
+			"type": "WallBasic",
+			"x": -1,
+			"y": -5
+		},
+		{
+			"type": "WallBasic",
+			"x": 1,
+			"y": -5
+		},
+		{
+			"type": "WallBasic",
+			"x": 2,
+			"y": -5
+		},
+		{
+			"type": "WallBasic",
+			"x": 3,
+			"y": -5
+		}
+	],
+	"100": [
+		{
+			"type": "Player",
+			"x": 0,
+			"y": 0
+		}
+	]
+}

@@ -1,5 +1,11 @@
+const { ipcRenderer } = require('electron')
+const EditMode = require('./game/EditMode')
 const Game = require('./game/Game')
 let game = null
+
+ipcRenderer.on('map-loaded', (event, mapData) => {
+  game.map.load(mapData)
+})
 
 function setup() {
   createCanvas(windowWidth, windowHeight)
@@ -9,6 +15,9 @@ function setup() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  if (game) {
+    game.resize()
+  }
 }
 
 function draw(dt) {
@@ -22,11 +31,14 @@ function keyPressed() {
 
 function mouseClicked(event) {
   game.mouseClicked(event)
+  return false
 }
 
 function toggleEditMode() {
-  if (game) {
-    game.isEditMode = !game.isEditMode
+  if (game.editMode) {
+    game.editMode = null
+  } else {
+    game.editMode = new EditMode(game)
     game.editMode.cursor.position = game.player.getPosition()
   }
 }

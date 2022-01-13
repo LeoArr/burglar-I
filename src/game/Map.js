@@ -1,3 +1,4 @@
+const fs = require('fs')
 const Player = require("./objects/Player")
 const FloorBasic = require("./objects/world/FloorBasic")
 const WallBasic = require("./objects/world/WallBasic")
@@ -5,14 +6,23 @@ const WallBasic = require("./objects/world/WallBasic")
 class Map {
   constructor(game, mapData) {
     this.game = game
-    this.mapData = mapData || DEFAULT_MAP
+    this.mapData = mapData || require('./maps/default.json')
     this.objects = {}
     this.cachedObjectsArray = null
     this.populateObjects()
   }
 
+  load(mapData) {
+    this.mapData = mapData
+    this.populateObjects()
+  }
+
   paintObject(paint, layer, position) {
-    const data = paint.getData(position)
+    const data = {
+      type: paint.constructor.name,
+      x: position.x,
+      y: position.y
+    }
     if (!this.mapData[layer]) {
       this.mapData[layer] = []
     }
@@ -22,6 +32,17 @@ class Map {
     }
     this.objects[layer].push(this.createObject(data))
     this.cachedObjectsArray = null
+  }
+
+  removeObject(object) {
+    for (const layer of Object.keys(this.objects)) {
+      const index = this.objects[layer].indexOf(object)
+      if (index > -1) {
+        this.objects[layer].splice(index, 1)
+        this.cachedObjectsArray = null
+        break
+      }
+    }
   }
 
   populateObjects() {
@@ -49,45 +70,15 @@ class Map {
 
   createObject(data) {
     switch(data.type) {
-      case 'FloorBasic': {
-        return new FloorBasic(this.game, createVector(data.x, data.y))
-        break
-      }
-      case 'WallBasic': {
-        return new WallBasic(this.game, createVector(data.x, data.y))
-        break
-      }
       case 'Player': {
         return new Player(this.game, createVector(data.x, data.y))
         break
       }
       default: {
-        console.error('No such object: ' + data.type)
+        return new (require(`./objects/world/${data.type}.js`))(this.game, createVector(data.x, data.y), data.interactions)
       }
     }
   }
-}
-
-const DEFAULT_MAP = {
-  0: [
-    {
-      type: 'FloorBasic',
-      x: 0,
-      y: 0,
-    },
-    {
-      type: 'WallBasic',
-      x: -1,
-      y: 0,
-    }
-  ],
-  100: [
-    {
-      type: 'Player',
-      x: 0,
-      y: 0,
-    }
-  ]
 }
 
 module.exports = Map

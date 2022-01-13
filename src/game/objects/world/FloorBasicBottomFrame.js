@@ -1,7 +1,7 @@
 const GameObject = require("../../GameObject");
 const Sprite = require("../../Sprite");
 
-class FloorBasic extends GameObject {
+class FloorBasicBottomFrame extends GameObject {
   constructor(game, position) {
     super({
       game,
@@ -9,10 +9,11 @@ class FloorBasic extends GameObject {
       sprite: new Sprite({
         tileset: 'dungeonTiles',
         x: Math.floor(Math.random() * 3 + 1),
-        y: Math.floor(Math.random() * 3 + 1),
+        y: 4,
       })
-    })
+    }
+    )
   }
 }
 
-module.exports = FloorBasic
+module.exports = FloorBasicBottomFrame

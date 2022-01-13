@@ -1,6 +1,7 @@
+const fs = require('fs')
 const path = require('path');
-const { app, BrowserWindow } = require('electron');
-const {ipcMain} = require('electron')
+const { app, BrowserWindow, dialog } = require('electron');
+const { ipcMain } = require('electron')
 
 var mainWindow = null
 var devToolsOpen = false
@@ -8,6 +9,42 @@ var devToolsOpen = false
 // Quit app if game quits
 ipcMain.on('game-quit', (evt, arg) => {
   app.quit()
+})
+
+ipcMain.on('load-map', (evt, arg) => {
+  dialog.showOpenDialog(mainWindow, {
+    filters: [{ name: 'Burglar map', extensions: ['json'] }],
+    title: 'Open',
+    defaultPath: path.join(__dirname, 'game/maps')
+  }).then((result) => {
+    if (!result.canceled && result.filePaths && result.filePaths.length) {
+      fs.readFile(result.filePaths[0], (err, data) => {
+        if (!err) {
+          try {
+            evt.reply('map-loaded', JSON.parse(data))
+          } catch (error) {
+            console.error(error)
+          }
+        }
+      })
+    }
+  })
+})
+
+ipcMain.on('save-map', (evt, mapData) => {
+  const fileName = dialog.showSaveDialog(mainWindow, {
+    title: 'Save',
+    defaultPath: path.join(__dirname, 'game/maps'),
+    filters: [{ name: 'Burglar map', extensions: ['json'] }]
+  }).then((result) => {
+    if (!result.canceled && result.filePath) {
+      try {
+        fs.writeFile(result.filePath, JSON.stringify(mapData, null, '\t'), () => {})
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  })
 })
 
 ipcMain.on('toggle-dev-tools', (evt, arg) => {
@@ -38,6 +75,7 @@ const createWindow = () => {
   mainWindow.webContents.openDevTools()
   mainWindow.setMenu(null)
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  // console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
 };
 
 const appReady = () => {

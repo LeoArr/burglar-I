@@ -40,7 +40,7 @@ class Player extends GameObject {
       }
     }
 
-    if (this.state === STATES.SHAKING) {
+    if (this.state === STATES.SHAKING) { // TODO Shake direction match movement direction
       const amount = Math.sin((++this.shakeFrame / this.maxShakeFrames) * (Math.PI * 2)) / 10
       this.sprite.offset = this.offset.copy().add(createVector(amount, 0))
       if (this.shakeFrame === this.maxShakeFrames) {
@@ -74,17 +74,20 @@ class Player extends GameObject {
   }
 
   anyBlockingObject(objects) {
+    if (!objects.length)
+      return true
+    objects.forEach(o => o.interact())
     return !!objects.filter((o) => o.blocks).length
   }
 
   keyPressed(keyCode) {
-    if (keyCode === LEFT_ARROW) {
+    if (C.left()) {
       return this.setNewTargetIfPossible(this.targetPosition.copy().add(createVector(-1, 0)))
-    } else if (keyCode === RIGHT_ARROW) {
+    } else if (C.right()) {
       return this.setNewTargetIfPossible(this.targetPosition.copy().add(createVector(1, 0)))
-    } else if (keyCode === UP_ARROW) {
+    } else if (C.up()) {
       return this.setNewTargetIfPossible(this.targetPosition.copy().add(createVector(0, -1)))
-    } else if (keyCode === DOWN_ARROW) {
+    } else if (C.down()) {
       return this.setNewTargetIfPossible(this.targetPosition.copy().add(createVector(0, 1)))
     }
   }
