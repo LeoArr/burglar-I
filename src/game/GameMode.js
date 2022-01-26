@@ -1,17 +1,21 @@
 const DialogBox = require("./DialogBox")
 const GAME_STATES = require("./gameStates")
 
+const BLOCKING_STATES = [
+  GAME_STATES.DIALOG,
+]
+
 class GameMode {
   constructor(game) {
     this.game = game
     this.state = GAME_STATES.PLAYER_TURN
+    this.mapVariables = this.game.map.getMapVariables()
     this.dialogBox = null
     this.currentEvent = null
     this.events = []
   }
 
   tick(dt) {
-    clear()
     background(0)
     if (!this.game.renderer.doneLoading) return
 
@@ -19,9 +23,11 @@ class GameMode {
     
     const objects = this.game.map.getObjectsArray()
 
-    objects.forEach((gameObject) => {
-      gameObject.update()
-    })
+    if (!BLOCKING_STATES.includes(this.state)) {
+      objects.forEach((gameObject) => {
+        gameObject.update()
+      })
+    }
 
     this.game.renderer.camera.position = this.game.player.getPosition()
     
@@ -60,6 +66,9 @@ class GameMode {
     if (this.currentEvent) {
       if (this.currentEvent.type === 'text') {
         this.dialogBox = new DialogBox(this.game, this.currentEvent.text)
+      } else if (this.currentEvent.type === 'function') {
+        this.currentEvent.owner[this.currentEvent.name](...this.currentEvent.arguments)
+        this.currentEvent = null
       }
     }
   }

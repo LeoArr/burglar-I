@@ -47,7 +47,7 @@ class Renderer {
   }
 
   scale(value) {
-    return Math.floor(value * this.camera.scaleValue)
+    return value * this.camera.scaleValue
   }
 
   draw(sprite, position) {

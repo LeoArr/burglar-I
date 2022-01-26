@@ -13,19 +13,16 @@ class Camera {
       .copy()
       .mult(C.TILE_WIDTH * this.scaleValue)
       .sub(this.position.copy().mult(C.TILE_WIDTH * this.scaleValue))
-      .add(createVector(
-        Math.floor(windowWidth / 2),
-        Math.floor(windowHeight / 2)
-      ))
+      .add(createVector(windowWidth / 2, windowHeight / 2))
       .add(this.playerOffset)
     }
-    
+    // 1.496 & 2.018144
     screenCoordToCameraCoord(coord) {
       return coord
       .copy()
       .sub(this.playerOffset)
       .sub(createVector(windowWidth/2, windowHeight/2))
-      .div(16 * this.scaleValue)
+      .div(C.TILE_WIDTH * this.scaleValue)
       .add(this.position)
   }
 }

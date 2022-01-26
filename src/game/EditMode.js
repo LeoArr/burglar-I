@@ -22,11 +22,11 @@ class EditMode {
     this.state = STATES.PAINTING
     this.currentLayer = 0
     this.paints = fs.readdirSync('./src/game/objects/world')
+      .sort()
       .map((paint) => new (require(`./objects/world/${paint}`))())
   }
 
   tick(dt) {
-    clear()
     background(0)
     this.handleCamera()
     this.game.map.getObjectsArray().forEach((gameObject) => {
@@ -134,13 +134,13 @@ class EditMode {
 
   handleCamera() {
     if (!this.isChoosingPaint && keyIsPressed) {
-      if (C.left()) {
+      if (C.left(this.game)) {
         this.game.renderer.camera.position.add(createVector(-1, 0))
-      } else if (C.right()) {
+      } else if (C.right(this.game)) {
         this.game.renderer.camera.position.add(createVector(1, 0))
-      } else if (C.down()) {
+      } else if (C.down(this.game)) {
         this.game.renderer.camera.position.add(createVector(0, 1))
-      } else if (C.up()) {
+      } else if (C.up(this.game)) {
         this.game.renderer.camera.position.add(createVector(0, -1))
       }
     }

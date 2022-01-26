@@ -14,6 +14,7 @@ class Game {
     this.renderer = new Renderer(this)
     this.gameMode = new GameMode(this)
     this.editMode = null
+    this.pressedKeys = {}
   }
   
   init() {
@@ -28,6 +29,7 @@ class Game {
     } else {
       this.gameMode.tick(dt)
     }
+    this.pressedKeys = {}
   }
 
   mouseClicked(event) {
@@ -45,6 +47,7 @@ class Game {
     } else if (keyCode === 220) { // §
       ipcRenderer.send('toggle-dev-tools')
     } else {
+      this.pressedKeys[keyCode] = true
       if (this.editMode) {
         this.editMode.keyPressed()
       } else {

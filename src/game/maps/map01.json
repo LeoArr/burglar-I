@@ -1,240 +1,503 @@
 {
-	"0": [
-		{
-			"type": "FloorBasic",
-			"x": 0,
-			"y": 0
-		},
-		{
-			"type": "WallBasic",
-			"x": -1,
-			"y": 0
-		},
-		{
-			"type": "DoorBasicClosed",
-			"x": 0,
-			"y": 1,
-			"interactions": [
-				{
-					"type": "text",
-					"text": "The burglar throws a final glance back ¤ Knowing that he must press on ahead. ¤ If by dawn his quest remains incomplete ¤ He is as good as dead."
-				}
-			]
-		},
-		{
-			"type": "DoorBasicBarred",
-			"x": 0,
-			"y": -5,
-			"interactions": [
-				{
-					"type": "text",
-					"text": "Closed bro"
-				}
-			]
-		},
-		{
-			"type": "WallBasic",
-			"x": -1,
-			"y": 1
-		},
-		{
-			"type": "WallBasic",
-			"x": 1,
-			"y": 1
-		},
-		{
-			"type": "WallBasic",
-			"x": 1,
-			"y": 0
-		},
-		{
-			"type": "WallBasic",
-			"x": 1,
-			"y": -5
-		},
-		{
-			"type": "WallBasic",
-			"x": -1,
-			"y": -5
-		},
-		{
-			"type": "WallBasic",
-			"x": -1,
-			"y": -2
-		},
-		{
-			"type": "WallBasic",
-			"x": -1,
-			"y": -1
-		},
-		{
-			"type": "WallBasic",
-			"x": 1,
-			"y": -1
-		},
-		{
-			"type": "WallBasic",
-			"x": 1,
-			"y": -2
-		},
-		{
-			"type": "WallBasic",
-			"x": -2,
-			"y": -5
-		},
-		{
-			"type": "WallBasic",
-			"x": -3,
-			"y": -5
-		},
-		{
-			"type": "WallBasic",
-			"x": -3,
-			"y": -2
-		},
-		{
-			"type": "WallBasic",
-			"x": -2,
-			"y": -2
-		},
-		{
-			"type": "WallBasic",
-			"x": 2,
-			"y": -2
-		},
-		{
-			"type": "WallBasic",
-			"x": 2,
-			"y": -5
-		},
-		{
-			"type": "WallBasic",
-			"x": 3,
-			"y": -2
-		},
-		{
-			"type": "WallBasic",
-			"x": 3,
-			"y": -5
-		},
-		{
-			"type": "FloorBasicTopFrame",
-			"x": -3,
-			"y": -4
-		},
-		{
-			"type": "FloorBasicTopFrame",
-			"x": -2,
-			"y": -4
-		},
-		{
-			"type": "FloorBasicTopFrame",
-			"x": -1,
-			"y": -4
-		},
-		{
-			"type": "FloorBasicTopFrame",
-			"x": 1,
-			"y": -4
-		},
-		{
-			"type": "FloorBasicTopFrame",
-			"x": 2,
-			"y": -4
-		},
-		{
-			"type": "FloorBasicTopFrame",
-			"x": 3,
-			"y": -4
-		},
-		{
-			"type": "FloorBasicBottomFrame",
-			"x": -3,
-			"y": -3
-		},
-		{
-			"type": "FloorBasicBottomFrame",
-			"x": -2,
-			"y": -3
-		},
-		{
-			"type": "FloorBasicBottomFrame",
-			"x": -1,
-			"y": -3
-		},
-		{
-			"type": "FloorBasicBottomFrame",
-			"x": 1,
-			"y": -3
-		},
-		{
-			"type": "FloorBasicBottomFrame",
-			"x": 2,
-			"y": -3
-		},
-		{
-			"type": "FloorBasicBottomFrame",
-			"x": 3,
-			"y": -3
-		},
-		{
-			"type": "FloorBasic",
-			"x": 0,
-			"y": -4
-		},
-		{
-			"type": "FloorBasic",
-			"x": 0,
-			"y": -3
-		},
-		{
-			"type": "FloorBasic",
-			"x": 0,
-			"y": -2
-		},
-		{
-			"type": "FloorBasic",
-			"x": 0,
-			"y": -1
-		},
-		{
-			"type": "FloorBasic",
-			"x": -5,
-			"y": -4
-		},
-		{
-			"type": "FloorBasic",
-			"x": -6,
-			"y": -4
-		},
-		{
-			"type": "FloorBasic",
-			"x": -6,
-			"y": -5
-		},
-		{
-			"type": "SubFloorPolesBasic",
-			"x": -6,
-			"y": -3
-		},
-		{
-			"type": "SubFloorPolesBasic",
-			"x": -5,
-			"y": -3
-		}
-	],
-	"1": [
-		{
-			"type": "BridgeBasicHorizontal",
-			"x": -4,
-			"y": -4
-		}
-	],
-	"100": [
-		{
-			"type": "Player",
-			"x": 0,
-			"y": 0
-		}
-	]
+	"variables": {
+		"leverIsPulled": false
+	},
+	"objects": {
+		"0": [
+			{
+				"type": "DoorBasicClosed",
+				"x": 0,
+				"y": 1,
+				"interactions": [
+					{
+						"type": "text",
+						"text": "The burglar throws a final glance back ¤ Knowing that he must press on ahead. ¤ If by dawn his quest remains incomplete ¤ He is as good as dead."
+					}
+				]
+			},
+			{
+				"type": "DoorBasicBarred",
+				"x": 0,
+				"y": -5,
+				"interactions": [
+					{
+						"type": "text",
+						"text": "Closed bro"
+					}
+				]
+			},
+			{
+				"type": "WallBasicBottomRight",
+				"x": 1,
+				"y": 1
+			},
+			{
+				"type": "WallBasicBottomLeft",
+				"x": -1,
+				"y": 1
+			},
+			{
+				"type": "WallBasicLeft",
+				"x": -1,
+				"y": 0
+			},
+			{
+				"type": "WallBasicLeft",
+				"x": -1,
+				"y": -1
+			},
+			{
+				"type": "WallBasicTopLeft",
+				"x": -1,
+				"y": -2
+			},
+			{
+				"type": "WallBasicRight",
+				"x": 1,
+				"y": 0
+			},
+			{
+				"type": "WallBasicRight",
+				"x": 1,
+				"y": -1
+			},
+			{
+				"type": "WallBasicTopRight",
+				"x": 1,
+				"y": -2
+			},
+			{
+				"type": "WallBasicBottom",
+				"x": -2,
+				"y": -2
+			},
+			{
+				"type": "WallBasicBottom",
+				"x": -3,
+				"y": -2
+			},
+			{
+				"type": "WallBasicBottom",
+				"x": 2,
+				"y": -2
+			},
+			{
+				"type": "WallBasicBottom",
+				"x": 3,
+				"y": -2
+			},
+			{
+				"type": "WallBasicTop",
+				"x": -1,
+				"y": -5
+			},
+			{
+				"type": "WallBasicTop",
+				"x": -2,
+				"y": -5
+			},
+			{
+				"type": "WallBasicTop",
+				"x": -3,
+				"y": -5
+			},
+			{
+				"type": "WallBasicTop",
+				"x": 1,
+				"y": -5
+			},
+			{
+				"type": "WallBasicTop",
+				"x": 2,
+				"y": -5
+			},
+			{
+				"type": "WallBasicTop",
+				"x": 3,
+				"y": -5
+			},
+			{
+				"type": "FloorBasic",
+				"x": 0,
+				"y": 0
+			},
+			{
+				"type": "FloorBasic",
+				"x": 0,
+				"y": -1
+			},
+			{
+				"type": "FloorBasic",
+				"x": 0,
+				"y": -2
+			},
+			{
+				"type": "FloorBasic",
+				"x": 0,
+				"y": -3
+			},
+			{
+				"type": "FloorBasic",
+				"x": 0,
+				"y": -4
+			},
+			{
+				"type": "FloorBasicBottomFrame",
+				"x": -1,
+				"y": -3
+			},
+			{
+				"type": "FloorBasicBottomFrame",
+				"x": -2,
+				"y": -3
+			},
+			{
+				"type": "FloorBasicBottomFrame",
+				"x": -3,
+				"y": -3
+			},
+			{
+				"type": "FloorBasicBottomFrame",
+				"x": 1,
+				"y": -3
+			},
+			{
+				"type": "FloorBasicBottomFrame",
+				"x": 2,
+				"y": -3
+			},
+			{
+				"type": "FloorBasicBottomFrame",
+				"x": 3,
+				"y": -3
+			},
+			{
+				"type": "FloorBasicTopFrame",
+				"x": -3,
+				"y": -4
+			},
+			{
+				"type": "FloorBasicTopFrame",
+				"x": -2,
+				"y": -4
+			},
+			{
+				"type": "FloorBasicTopFrame",
+				"x": -1,
+				"y": -4
+			},
+			{
+				"type": "FloorBasicTopFrame",
+				"x": 1,
+				"y": -4
+			},
+			{
+				"type": "FloorBasicTopFrame",
+				"x": 2,
+				"y": -4
+			},
+			{
+				"type": "FloorBasicTopFrame",
+				"x": 3,
+				"y": -4
+			},
+			{
+				"type": "FloorBasic",
+				"x": -5,
+				"y": -4
+			},
+			{
+				"type": "FloorBasic",
+				"x": -5,
+				"y": -3
+			},
+			{
+				"type": "FloorBasic",
+				"x": -6,
+				"y": -3
+			},
+			{
+				"type": "FloorBasic",
+				"x": -6,
+				"y": -4
+			},
+			{
+				"type": "FloorBasic",
+				"x": -6,
+				"y": -5
+			},
+			{
+				"type": "FloorBasic",
+				"x": -5,
+				"y": -5
+			},
+			{
+				"type": "StairBasicVerticalDown",
+				"x": -5,
+				"y": -6
+			},
+			{
+				"type": "FloorBasicRightFrame",
+				"x": -5,
+				"y": -7
+			},
+			{
+				"type": "WallBasicBottom",
+				"x": -6,
+				"y": -2
+			},
+			{
+				"type": "WallBasicBottom",
+				"x": -5,
+				"y": -2
+			},
+			{
+				"type": "WallBasicBottomLeft",
+				"x": -7,
+				"y": -2
+			},
+			{
+				"type": "WallBasicLeft",
+				"x": -7,
+				"y": -3
+			},
+			{
+				"type": "WallBasicLeft",
+				"x": -7,
+				"y": -4
+			},
+			{
+				"type": "WallBasicLeft",
+				"x": -7,
+				"y": -5
+			},
+			{
+				"type": "WallBasicBottomRight",
+				"x": -4,
+				"y": -2
+			},
+			{
+				"type": "WallBasicRight",
+				"x": -4,
+				"y": -3
+			},
+			{
+				"type": "WallBasicBottomRight",
+				"x": -4,
+				"y": -5
+			},
+			{
+				"type": "WallBasicRight",
+				"x": -4,
+				"y": -6
+			},
+			{
+				"type": "WallBasicTop",
+				"x": -6,
+				"y": -6
+			},
+			{
+				"type": "WallBasicLeft",
+				"x": -7,
+				"y": -6
+			},
+			{
+				"type": "WallBasicBottomLeft",
+				"x": -4,
+				"y": -2
+			},
+			{
+				"type": "WallBasicLeft",
+				"x": -4,
+				"y": -3
+			},
+			{
+				"type": "WallBasicBottomLeft",
+				"x": -4,
+				"y": -5
+			},
+			{
+				"type": "FloorWoodRight",
+				"x": -4,
+				"y": -8
+			},
+			{
+				"type": "FloorWoodLeft",
+				"x": -6,
+				"y": -8
+			},
+			{
+				"type": "FloorWoodLeft",
+				"x": -6,
+				"y": -9
+			},
+			{
+				"type": "FloorWoodLeft",
+				"x": -6,
+				"y": -10
+			},
+			{
+				"type": "FloorWoodRight",
+				"x": -4,
+				"y": -9
+			},
+			{
+				"type": "FloorWoodRight",
+				"x": -4,
+				"y": -10
+			},
+			{
+				"type": "FloorWoodBasic",
+				"x": -5,
+				"y": -10
+			},
+			{
+				"type": "FloorWoodBasic",
+				"x": -5,
+				"y": -9
+			},
+			{
+				"type": "FloorWoodBasic",
+				"x": -5,
+				"y": -8
+			},
+			{
+				"type": "WallBasicTopLeft",
+				"x": -6,
+				"y": -7
+			},
+			{
+				"type": "WallBasicTopRight",
+				"x": -4,
+				"y": -7
+			},
+			{
+				"type": "WallBasicBottomLeft",
+				"x": -7,
+				"y": -7
+			},
+			{
+				"type": "WallBasicBottomRight",
+				"x": -3,
+				"y": -7
+			},
+			{
+				"type": "WallBasicLeft",
+				"x": -7,
+				"y": -8
+			},
+			{
+				"type": "WallBasicLeft",
+				"x": -7,
+				"y": -9
+			},
+			{
+				"type": "WallBasicLeft",
+				"x": -7,
+				"y": -10
+			},
+			{
+				"type": "WallBasicRight",
+				"x": -3,
+				"y": -8
+			},
+			{
+				"type": "WallBasicRight",
+				"x": -3,
+				"y": -9
+			},
+			{
+				"type": "WallBasicRight",
+				"x": -3,
+				"y": -10
+			},
+			{
+				"type": "WallBasicRight",
+				"x": -3,
+				"y": -11
+			},
+			{
+				"type": "WallBasicLeft",
+				"x": -7,
+				"y": -11
+			},
+			{
+				"type": "WallBasicTop",
+				"x": -6,
+				"y": -11
+			},
+			{
+				"type": "WallBasicTop",
+				"x": -5,
+				"y": -11
+			},
+			{
+				"type": "WallBasicTop",
+				"x": -4,
+				"y": -11
+			},
+			{
+				"type": "BasicFloorTrap",
+				"x": -5,
+				"y": -7,
+				"interactions": [
+					{
+						"type": "function",
+						"name": "springTrap",
+						"arguments": [
+							"leverIsPulled"
+						]
+					}
+				]
+			},
+			{
+				"type": "LeverBasic",
+				"x": 3,
+				"y": -5,
+				"interactions": [
+					{
+						"type": "function",
+						"name": "toggle",
+						"arguments": [
+							"leverIsPulled"
+						]
+					}
+				]
+			},
+			{
+				"type": "WallBasicBottomRight",
+				"x": 4,
+				"y": -2
+			},
+			{
+				"type": "WallBasicRight",
+				"x": 4,
+				"y": -3
+			},
+			{
+				"type": "WallBasicRight",
+				"x": 4,
+				"y": -4
+			},
+			{
+				"type": "WallBasicRight",
+				"x": 4,
+				"y": -5
+			}
+		],
+		"1": [
+			{
+				"type": "BridgeBasicHorizontal",
+				"x": -4,
+				"y": -4
+			}
+		],
+		"100": [
+			{
+				"type": "Player",
+				"x": 0,
+				"y": 0
+			}
+		]
+	}
 }

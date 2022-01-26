@@ -29,6 +29,10 @@ function keyPressed() {
   return false // Prevent default behaviour
 }
 
+function keyReleased() {
+  return false // Prevent default behaviour
+}
+
 function mouseClicked(event) {
   game.mouseClicked(event)
   return false

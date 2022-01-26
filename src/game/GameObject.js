@@ -3,13 +3,23 @@ class GameObject {
     this.game = game
     this.position = position || createVector(0, 0)
     this.sprite = sprite
-    this.interactions = interactions || []
+    this.interactions = interactions ? interactions.map(this.createInteractable(this)) : []
   }
 
   interact() {
     if (this.interactions.length) {
       this.game.gameMode.events = this.game.gameMode.events.concat(this.interactions)
       return true
+    }
+    return false
+  }
+
+  createInteractable(owner) {
+    return (interactionData) => {
+      return {
+        ...interactionData,
+        owner
+      }
     }
   }
 

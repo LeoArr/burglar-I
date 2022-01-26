@@ -31,10 +31,11 @@ class Player extends GameObject {
   }
 
   update() {
+    if (this.game.gameMode.state === GAME_STATES.PLAYER_DEAD)
+      return
     if (this.state === STATES.IDLE) {
       if (this.game.gameMode.state === GAME_STATES.PLAYER_TURN) {
-        const turnTaken = keyIsPressed && this.keyPressed(keyCode)
-        if (turnTaken) {
+        if (this.keyPressed(keyCode)) {
           this.game.gameMode.state = GAME_STATES.WAITING
         }
       }
@@ -55,15 +56,30 @@ class Player extends GameObject {
         this.state = STATES.IDLE
       } else {
         this.position.lerp(this.targetPosition, this.moveFrame++ / this.maxMoveFrames)
+        this.position = createVector(
+          this.clean(this.position.x),
+          this.clean(this.position.y)
+        )
       }
     }
   }
 
+  clean(num) {
+    return Number((Math.round(num * 100) / 100).toFixed(2))
+  }
+
+  interactWithOthers(objects) {
+    return objects.map(o => o.interact()).some(result => result)
+  }
+
   setNewTargetIfPossible(target) {
     const objectsAtTarget = this.game.map.getObjectsAtPosition(target)
+    const interaction = this.interactWithOthers(objectsAtTarget)
     if (this.anyBlockingObject(objectsAtTarget)) {
-      this.shakeFrame = 0
-      this.state = STATES.SHAKING
+      if (!interaction) {
+        this.shakeFrame = 0
+        this.state = STATES.SHAKING
+      }
     } else {
       this.targetPosition = target
       this.moveFrame = 0
@@ -76,18 +92,17 @@ class Player extends GameObject {
   anyBlockingObject(objects) {
     if (!objects.length)
       return true
-    objects.forEach(o => o.interact())
     return !!objects.filter((o) => o.blocks).length
   }
 
   keyPressed(keyCode) {
-    if (C.left()) {
+    if (C.left(this.game)) {
       return this.setNewTargetIfPossible(this.targetPosition.copy().add(createVector(-1, 0)))
-    } else if (C.right()) {
+    } else if (C.right(this.game)) {
       return this.setNewTargetIfPossible(this.targetPosition.copy().add(createVector(1, 0)))
-    } else if (C.up()) {
+    } else if (C.up(this.game)) {
       return this.setNewTargetIfPossible(this.targetPosition.copy().add(createVector(0, -1)))
-    } else if (C.down()) {
+    } else if (C.down(this.game)) {
       return this.setNewTargetIfPossible(this.targetPosition.copy().add(createVector(0, 1)))
     }
   }

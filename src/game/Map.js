@@ -1,7 +1,5 @@
 const fs = require('fs')
 const Player = require("./objects/Player")
-const FloorBasic = require("./objects/world/FloorBasic")
-const WallBasic = require("./objects/world/WallBasic")
 
 class Map {
   constructor(game, mapData) {
@@ -25,10 +23,10 @@ class Map {
       x: position.x,
       y: position.y
     }
-    if (!this.mapData[layer]) {
-      this.mapData[layer] = []
+    if (!this.mapData.objects[layer]) {
+      this.mapData.objects[layer] = []
     }
-    this.mapData[layer].push(data)
+    this.mapData.objects[layer].push(data)
     if (!this.objects[layer]) {
       this.objects[layer] = []
     }
@@ -37,6 +35,7 @@ class Map {
   }
 
   removeObject(object, currentLayer) {
+    if (!object) return
     {
       const index = this.objects[currentLayer].indexOf(object)
       if (index > -1) {
@@ -45,20 +44,27 @@ class Map {
       }
     }
     {
-      const index = this.mapData[currentLayer]
+      const index = this.mapData.objects[currentLayer]
         .findIndex((value) => value.type === object.constructor.name
           && value.x === object.position.x && value.y === object.position.y
         )
       if (index > -1) {
-        this.mapData[currentLayer].splice(index, 1)
+        this.mapData.objects[currentLayer].splice(index, 1)
       }
+    }
+  }
+
+  getMapVariables() {
+    return {
+      ...this.mapData.variables
     }
   }
 
   populateObjects() {
     this.cachedObjectsArray = null
-    for (const layer of Object.keys(this.mapData)) {
-      this.objects[layer] = this.mapData[layer].map((data) => this.createObject(data))
+    this.objects = {}
+    for (const layer of Object.keys(this.mapData.objects)) {
+      this.objects[layer] = this.mapData.objects[layer].map((data) => this.createObject(data))
     }
   }
 

@@ -7,7 +7,7 @@ class EditCursor extends GameObject {
       game,
       sprite: new Sprite({
         tileset: 'dungeonTiles',
-        x: 9, y: 14
+        x: 5, y: 10
       })
     })
   }
