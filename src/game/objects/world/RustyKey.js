@@ -1,8 +1,7 @@
-const GameObject = require("../../GameObject");
 const Sprite = require("../../Sprite");
-const Door = require("../baseItem/Door");
+const Key = require("../baseItem/Key");
 
-class DoorBasicBarred extends Door {
+class RustyKey extends Key {
   constructor(game, position, interactions) {
     super(
       game,
@@ -10,13 +9,13 @@ class DoorBasicBarred extends Door {
       interactions,
       new Sprite({
         tileset: 'dungeonTiles',
-        x: 9, y: 12
+        x: 15,
+        y: 12,
       }),
-      true,
-      "This door is locked",
+      "Rusty key",
       ["rusty"]
     )
   }
 }
 
-module.exports = DoorBasicBarred
+module.exports = RustyKey

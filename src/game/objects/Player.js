@@ -1,6 +1,7 @@
 const C = require('../constants')
 const GameObject = require("../GameObject");
 const GAME_STATES = require('../gameStates');
+const Inventory = require('../Inventory');
 const Sprite = require("../Sprite");
 
 const STATES = {
@@ -28,6 +29,7 @@ class Player extends GameObject {
     this.moveFrame = 0
     this.maxShakeFrames = 10
     this.shakeFrame = 0
+    this.inventory = new Inventory(game)
   }
 
   update() {

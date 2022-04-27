@@ -18,13 +18,7 @@
 			{
 				"type": "DoorBasicBarred",
 				"x": 0,
-				"y": -5,
-				"interactions": [
-					{
-						"type": "text",
-						"text": "Closed bro"
-					}
-				]
+				"y": -5
 			},
 			{
 				"type": "WallBasicBottomRight",
@@ -483,6 +477,11 @@
 				"type": "WallBasicRight",
 				"x": 4,
 				"y": -5
+			},
+			{
+				"type": "RustyKey",
+				"x": -5,
+				"y": -9
 			}
 		],
 		"1": [

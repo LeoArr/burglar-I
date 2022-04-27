@@ -8,7 +8,7 @@ class GameObject {
 
   interact() {
     if (this.interactions.length) {
-      this.game.gameMode.events = this.game.gameMode.events.concat(this.interactions)
+      this.game.gameMode.addEvents(this.interactions)
       return true
     }
     return false
@@ -31,6 +31,10 @@ class GameObject {
 
   getPosition() {
     return this.position.copy()
+  }
+
+  remove() {
+    this.game.map.removeObject(this, this.currentLayer)
   }
 }
 

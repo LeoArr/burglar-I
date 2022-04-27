@@ -14,7 +14,7 @@ function setup() {
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(windowWidth, windowHeight)
   if (game) {
     game.resize()
   }
@@ -35,7 +35,7 @@ function keyReleased() {
 
 function mouseClicked(event) {
   game.mouseClicked(event)
-  return false
+  return false // Prevent default behaviour
 }
 
 function toggleEditMode() {

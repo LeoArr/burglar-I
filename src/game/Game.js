@@ -2,7 +2,6 @@ const { ipcRenderer } = require('electron')
 const GAME_STATES = require('./gameStates')
 const Renderer = require('./Renderer')
 const GameMode = require('./GameMode')
-const EditMode = require('./EditMode')
 const Player = require('./objects/Player')
 const Map = require('./Map')
 
@@ -46,6 +45,10 @@ class Game {
       ipcRenderer.send('game-quit')
     } else if (keyCode === 220) { // §
       ipcRenderer.send('toggle-dev-tools')
+    } else if (keyCode === 187) { // +
+      this.renderer.camera.scaleValue += 1
+    } else if (keyCode === 189) { // -
+      this.renderer.camera.scaleValue = Math.max(this.renderer.camera.scaleValue - 1, 1)
     } else {
       this.pressedKeys[keyCode] = true
       if (this.editMode) {

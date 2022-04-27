@@ -73,6 +73,7 @@ const createWindow = () => {
 
   // mainWindow.removeMenu()
   mainWindow.webContents.openDevTools()
+  // mainWindow.setResizable(false)
   mainWindow.setMenu(null)
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
   // console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))

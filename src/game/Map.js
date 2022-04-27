@@ -30,7 +30,7 @@ class Map {
     if (!this.objects[layer]) {
       this.objects[layer] = []
     }
-    this.objects[layer].push(this.createObject(data))
+    this.objects[layer].push(this.createObject(data, layer))
     this.cachedObjectsArray = null
   }
 
@@ -64,7 +64,7 @@ class Map {
     this.cachedObjectsArray = null
     this.objects = {}
     for (const layer of Object.keys(this.mapData.objects)) {
-      this.objects[layer] = this.mapData.objects[layer].map((data) => this.createObject(data))
+      this.objects[layer] = this.mapData.objects[layer].map((data) => this.createObject(data, layer))
     }
   }
 
@@ -84,14 +84,15 @@ class Map {
     return this.getObjectsArray().filter((object) => object.getPosition().equals(position))
   }
 
-  createObject(data) {
+  createObject(data, layer) {
     switch(data.type) {
       case 'Player': {
         return new Player(this.game, createVector(data.x, data.y))
-        break
       }
       default: {
-        return new (require(`./objects/world/${data.type}.js`))(this.game, createVector(data.x, data.y), data.interactions)
+        const newObj = new (require(`./objects/world/${data.type}.js`))(this.game, createVector(data.x, data.y), data.interactions)
+        newObj.currentLayer = layer
+        return newObj
       }
     }
   }

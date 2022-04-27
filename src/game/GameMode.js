@@ -39,6 +39,8 @@ class GameMode {
       gameObject.draw()
     })
 
+    this.game.player.inventory.draw()
+
     if (this.state === GAME_STATES.DIALOG && this.dialogBox) {
       this.dialogBox.updateAndDraw()
     }
@@ -67,10 +69,18 @@ class GameMode {
       if (this.currentEvent.type === 'text') {
         this.dialogBox = new DialogBox(this.game, this.currentEvent.text)
       } else if (this.currentEvent.type === 'function') {
-        this.currentEvent.owner[this.currentEvent.name](...this.currentEvent.arguments)
+        this.currentEvent.owner[this.currentEvent.name](...(this.currentEvent.arguments || []))
         this.currentEvent = null
       }
     }
+  }
+
+  addEvents(events) {
+    this.events = this.events.concat(events)
+  }
+
+  addEvent(event) {
+    this.events.push(event)
   }
 }
 
